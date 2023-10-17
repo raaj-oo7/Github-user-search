@@ -43,7 +43,7 @@ body {
 }
 
 #search {
-    width: 200px;
+    width: 250px;
     margin-right: 65px;
     padding: 5px;
     border-radius: 5px;
@@ -196,11 +196,14 @@ ul {
 
     .title {
         margin-left: 0;
-
     }
 
     #search {
         margin-right: 0;
+    }
+
+    #search {
+        width: 170px;
     }
 
 }
