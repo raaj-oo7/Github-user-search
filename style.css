@@ -5,7 +5,8 @@
 }
 
 body {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    height: 100vh;
 }
 
 .heading {
@@ -24,6 +25,7 @@ body {
 }
 
 .container {
+    min-height: 100vh;
     padding: 35px;
     margin: 0 auto;
     background-color: #f0f0f0;
@@ -89,7 +91,8 @@ img {
 }
 
 .reveal-btn {
-    padding: 1px 5px;
+    padding: 2px 7px;
+    border: 0;
     border-radius: 5px;
     background-color: #5f5ff1;
     color: #ffffff;
@@ -200,9 +203,6 @@ ul {
 
     #search {
         margin-right: 0;
-    }
-
-    #search {
         width: 170px;
     }
 
