@@ -20,13 +20,14 @@ body {
 .users {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center;
+    grid-gap: 20px;
+    justify-content: center;
     align-items: center;
 }
 
 .container {
     min-height: 100vh;
-    padding: 35px;
+    padding: 3% 5%;
     margin: 0 auto;
     background-color: #f0f0f0;
 }
@@ -41,19 +42,17 @@ body {
     font-size: 1.3rem;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 500;
-    margin-left: 65px;
 }
 
 #search {
     width: 250px;
-    margin-right: 65px;
     padding: 5px;
     border-radius: 5px;
     border: none;
 }
 
 .user-card {
-    width: 350px;
+    width: 100%;
     margin-top: 20px;
     list-style: none;
     padding: 15px;
@@ -79,7 +78,7 @@ body {
 
 img {
     height: 85px;
-    width: 95px;
+    width: 105px;
     border-radius: 7px;
     background-color: #ded2d2;
 }
@@ -131,24 +130,9 @@ ul {
         margin-left: 130px;
     }
 
-    .title {
-        margin-left: 30px;
-    }
-
-    #search {
-        margin-right: 30px;
-    }
-
     .users {
         display: grid;
         grid-template-columns: 1fr 1fr;
-    }
-
-    .user-image {
-        margin-right: 12px;
-        margin-bottom: 15px;
-        height: 60px;
-        width: 60px;
     }
 
     img {
@@ -163,9 +147,19 @@ ul {
     }
 
     .user-card {
-        width: 290px;
-        margin-top: 20px;
+        width: 100%;
         padding: 15px;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .users {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 6% 11%;
     }
 }
 
@@ -179,43 +173,16 @@ ul {
         grid-template-columns: 1fr;
     }
 
-    .container {
-        padding: 10px;
-    }
-
-    .user-image {
-        height: 70px;
-        width: 70px;
-    }
-
-    .followers-image {
-        height: 70px;
-        width: 80px;
-    }
-
-    .user-card {
-        width: 300px;
-    }
-
-    .title {
-        margin-left: 0;
-    }
-
     #search {
-        margin-right: 0;
         width: 170px;
     }
 
-}
-
-@media only screen and (max-width: 650px) {
-    .users {
-        display: grid;
-        grid-template-columns: 1fr;
+    .user-image {
+        height: 80px;
+        width: 80px;
     }
 
     .container {
-        padding: 10px;
+        padding: 6% 5%;
     }
-
 }
