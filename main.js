@@ -23,12 +23,14 @@ function createUserCard(user) {
 
   card.innerHTML = `
         <div class="user-profile">
+         <a href="${user.html_url}" target="_blank">
             <img src="${user.avatar_url}" alt="${user.login}" class="user-image">
+         </a>
             <div class="user-name">${user.login}</div>
         </div>
         <div class="followers-reveal-button">
             <div class="user-followers">Followers</div>
-            <button class="reveal-btn" value="false">Reveal</button>
+            <button class="reveal-btn" value="true">Reveal</button>
         </div>
         <ul class="followers-list">
           <li><a><img></a></li>
@@ -102,8 +104,9 @@ function handleRevealButton(revealBtn, followersList, username) {
     if (cachedFollowersData) {
       const followersData = JSON.parse(cachedFollowersData);
       updateFollowersList(followersList, followersData, revealBtn);
-    } else {
-      // can't fetch followers data from the API
+    }
+    // Followers data can't fetch from local storage and fetch from api
+    else {
       const followersData = await fetchFollowers(username);
 
       // Store followers data in local storage 
@@ -122,7 +125,6 @@ async function createUserCards() {
 
     if (cachedData) {
       const usersData = JSON.parse(cachedData);
-      //If data is available in local storage
       for (const user of usersData) {
         const card = createUserCard(user);
         userCards.appendChild(card);
@@ -132,11 +134,11 @@ async function createUserCards() {
       }
     }
     else {
-      // data is not available in local storage 
+      // Data is not available in local storage
       const usersResponse = await fetch("../data.json");
       const usersData = await usersResponse.json();
 
-      // Store the fetched data in local storage 
+      // Update local storage and Store the fetched data in local storage 
       localStorage.setItem('userCardsData', JSON.stringify(usersData));
 
       for (const user of usersData) {
@@ -147,7 +149,6 @@ async function createUserCards() {
         handleRevealButton(revealBtn, followersList, user.login);
       }
     }
-
     searchInput.addEventListener("input", (e) => {
       filterUserCards(e.target.value);
     });
