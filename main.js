@@ -140,7 +140,7 @@ async function createUserCards() {
       }
     } else {
       // Data is not available in local storage
-      const usersResponse = await fetch("../data.json");
+      const usersResponse = await fetch("https://api.github.com/users");
       const usersData = await usersResponse.json();
 
       localStorage.setItem('userCardsData', JSON.stringify(usersData));
