@@ -95,25 +95,31 @@ function updateFollowersList(followersList, followersData, revealBtn) {
   }
 }
 
-//  Reveal button handler
-function handleRevealButton(revealBtn, followersList, username) {
+// Reveal button handler
+async function handleRevealButton(revealBtn, followersList, username) {
   revealBtn.addEventListener("click", async () => {
-    // Check if followers data is available in local storage
-    const cachedFollowersData = localStorage.getItem(`followersData_${username}`);
+    let followersData;
 
-    if (cachedFollowersData) {
-      const followersData = JSON.parse(cachedFollowersData);
-      updateFollowersList(followersList, followersData, revealBtn);
+    // followers data is available in local storage
+    const userCardsData = JSON.parse(localStorage.getItem('userCardsData'));
+    const userIndex = userCardsData.findIndex(user => user.login === username);
+
+    if (userIndex !== -1 && userCardsData[userIndex].followersData) {
+      // Data is available local storage
+      followersData = userCardsData[userIndex].followersData;
+    } else {
+      // Data is not in local storage and fetch it from the API 
+      followersData = await fetchFollowers(username);
+      followersData = followersData.slice(0, 3); // we need only first 3 follower
+
+      // Update the user's followers data in userCardsData
+      if (userIndex !== -1) {
+        userCardsData[userIndex].followersData = followersData;
+        localStorage.setItem('userCardsData', JSON.stringify(userCardsData));
+      }
     }
-    // Followers data can't fetch from local storage and fetch from api
-    else {
-      const followersData = await fetchFollowers(username);
-
-      // Store followers data in local storage 
-      localStorage.setItem(`followersData_${username}`, JSON.stringify(followersData));
-
-      updateFollowersList(followersList, followersData, revealBtn);
-    }
+    // Update the followers list with the limited data
+    updateFollowersList(followersList, followersData, revealBtn);
   });
 }
 
@@ -132,13 +138,11 @@ async function createUserCards() {
         const revealBtn = card.querySelector(".reveal-btn");
         handleRevealButton(revealBtn, followersList, user.login);
       }
-    }
-    else {
+    } else {
       // Data is not available in local storage
       const usersResponse = await fetch("../data.json");
       const usersData = await usersResponse.json();
 
-      // Update local storage and Store the fetched data in local storage 
       localStorage.setItem('userCardsData', JSON.stringify(usersData));
 
       for (const user of usersData) {
