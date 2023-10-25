@@ -45,9 +45,10 @@ body {
 }
 
 #search {
-    width: 250px;
-    padding: 5px;
-    border-radius: 5px;
+    width: 300px;
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 10px;
     border: none;
 }
 
@@ -55,7 +56,7 @@ body {
     width: 100%;
     margin-top: 20px;
     list-style: none;
-    padding: 15px;
+    padding: 15px !important;
     background-color: #ffffff;
     color: #222;
 }
@@ -67,8 +68,7 @@ body {
     margin-bottom: 20px;
 }
 
-.user-image,
-.avatar-img {
+.user-image {
     margin-right: 15px;
     height: 80px;
     width: 80px;
@@ -77,10 +77,11 @@ body {
 }
 
 img {
-    height: 85px;
-    width: 105px;
-    border-radius: 7px;
+    height: 80px;
+    width: 96px;
+    border-radius: 10px;
     background-color: #ded2d2;
+    object-fit: cover;
 }
 
 .followers-reveal-button {
@@ -102,30 +103,38 @@ ul {
 }
 
 .followers-list {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
     align-items: center;
-    justify-items: center;
+    justify-content: space-between;
     gap: 12px;
     margin: 10px 0;
 }
 
-.followers-image {
-    margin-right: 15px;
+li {
     height: 80px;
     width: 96px;
     border-radius: 10px;
-    background-color: #f0f0f0;
+    background-color: #ded2d2;
 }
 
-@media only screen and (max-width: 1150px) {
+@media only screen and (max-width: 1175px) {
+
+    img,
+    li {
+        width: 100%;
+        max-width: 95px;
+        max-height: 85px;
+    }
+
+
     .users {
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 780px) {
+
     .heading {
         margin-left: 130px;
     }
@@ -135,31 +144,28 @@ ul {
         grid-template-columns: 1fr 1fr;
     }
 
-    img {
-        width: 75px;
-        height: 70px;
-    }
-
-    .followers-image {
-        margin-right: 15px;
-        height: 70px;
-        width: 76px;
-    }
-
     .user-card {
         width: 100%;
         padding: 15px;
     }
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 700px) {
+    .container {
+        padding: 45px 65px;
+    }
+
     .users {
         display: grid;
         grid-template-columns: 1fr;
     }
+
+    #search {
+        width: 250px;
+    }
 }
 
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 460px) {
     .heading {
         margin-left: 90px;
     }
@@ -170,15 +176,15 @@ ul {
     }
 
     #search {
-        width: 170px;
+        width: 190px;
     }
 
     .user-image {
-        height: 80px;
-        width: 80px;
+        height: 70px;
+        width: 75px;
     }
 
     .container {
-        padding: 22px 16px;
+        padding: 22px 15px;
     }
 }
