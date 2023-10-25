@@ -33,9 +33,9 @@ function createUserCard(user) {
             <button class="reveal-btn" value="true">Reveal</button>
         </div>
         <ul class="followers-list">
-          <li><a><img></a></li>
-          <li><a><img></a></li>
-          <li><a><img></a></li>
+          <li></li>
+          <li></li>
+          <li></li>
         </ul>
     `;
   return card;
@@ -84,10 +84,6 @@ function updateFollowersList(followersList, followersData, revealBtn) {
     followersList.innerHTML = "";
     followersData.slice(0, 3).forEach((follower) => {
       const followerItem = document.createElement("li");
-      const followerLink = document.createElement("a");
-      const followerImage = document.createElement("img");
-      followerLink.appendChild(followerImage);
-      followerItem.appendChild(followerLink);
       followersList.appendChild(followerItem);
     });
     revealBtn.textContent = "Reveal";
