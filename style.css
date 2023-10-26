@@ -12,8 +12,9 @@ body {
 .heading {
     font-weight: bold;
     font-size: x-large;
-    margin: 12px 0;
-    margin-left: 100px;
+    width: 100%;
+    padding: 10px 55px;
+    background-color: #ffffff;
     font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
 }
 
@@ -77,8 +78,8 @@ body {
 }
 
 img {
-    height: 80px;
-    width: 96px;
+    height: 100%;
+    width: 100%;
     border-radius: 10px;
     background-color: #ded2d2;
     object-fit: cover;
@@ -112,21 +113,12 @@ ul {
 
 li {
     height: 80px;
-    width: 96px;
+    width: 100%;
     border-radius: 10px;
     background-color: #ded2d2;
 }
 
 @media only screen and (max-width: 1175px) {
-
-    img,
-    li {
-        width: 100%;
-        max-width: 95px;
-        max-height: 85px;
-    }
-
-
     .users {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -134,11 +126,6 @@ li {
 }
 
 @media only screen and (max-width: 780px) {
-
-    .heading {
-        margin-left: 130px;
-    }
-
     .users {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -155,6 +142,10 @@ li {
         padding: 45px 65px;
     }
 
+    .heading {
+        padding: 10px 65px;
+    }
+
     .users {
         display: grid;
         grid-template-columns: 1fr;
@@ -166,10 +157,6 @@ li {
 }
 
 @media only screen and (max-width: 460px) {
-    .heading {
-        margin-left: 90px;
-    }
-
     .users {
         display: grid;
         grid-template-columns: 1fr;
@@ -186,5 +173,9 @@ li {
 
     .container {
         padding: 22px 15px;
+    }
+
+    .heading {
+        padding: 10px 15px;
     }
 }

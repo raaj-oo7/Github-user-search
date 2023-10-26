@@ -10,23 +10,24 @@
 </head>
 
 <body>
-    <h3 class="heading">ZURU</h3>
+    <div class="app-content">
+        <h3 class="heading">ZURU</h3>
+        <!-- user container -->
+        <div class="container">
 
-    <!-- user container -->
-    <div class="container">
+            <!-- Dashboard title -->
+            <nav class="navbar">
+                <div class="title">
+                    Users
+                </div>
+                <div>
+                    <input id="search" type="text" placeholder="Search">
+                </div>
+            </nav>
 
-        <!-- Dashboard title -->
-        <nav class="navbar">
-            <div class="title">
-                Users
-            </div>
-            <div>
-                <input id="search" type="text" placeholder="Search">
-            </div>
-        </nav>
-
-        <!-- user card -->
+            <!-- user card -->
             <main id="user-cards" class="users"></main>
+        </div>
     </div>
     <script type="module" src="./main.js"></script>
 </body>
