@@ -43,14 +43,25 @@ function createUserCard(user) {
 // Search user-card using filter method
 function filterUserCards(searchText) {
   const userCards = document.querySelectorAll(".user-card");
+  const userNotFoundMessage = document.getElementById("user-not-found");
+  let usersFound = false;
+
   userCards.forEach((card) => {
-    const userName = card.querySelector(".user-name").textContent;
-    if (userName.toLowerCase().includes(searchText.toLowerCase())) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
-    }
+      const userName = card.querySelector(".user-name").textContent;
+      if (userName.toLowerCase().includes(searchText.toLowerCase())) {
+          card.style.display = "block";
+          usersFound = true;
+      } else {
+          card.style.display = "none";
+      }
   });
+
+  // Show the user not found UI based on the search result
+  if (usersFound) {
+      userNotFoundMessage.style.display = "none";
+  } else {
+      userNotFoundMessage.style.display = "flex";
+  }
 }
 
 // Function to create a follower element
