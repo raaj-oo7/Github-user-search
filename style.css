@@ -52,7 +52,7 @@ body {
     padding: 6px;
     border-radius: 20px;
     border: none;
-    background: url(../icon-search.svg) no-repeat left;
+    background: url(./image/icon-search.svg) no-repeat left;
     background-color: #fff;
     background-position: 6px 4px;
     background-size: 20px;
