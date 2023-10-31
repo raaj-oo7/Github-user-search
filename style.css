@@ -9,6 +9,11 @@ body {
     height: 100vh;
 }
 
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
 .heading {
     font-weight: bold;
     font-size: x-large;
@@ -27,10 +32,10 @@ body {
 }
 
 .container {
-    min-height: 93vh;
+    min-height: calc(100vh - 52px);
     padding: 25px 30px;
     margin: 0 auto;
-    background-color: #f0f0f0;
+    background-color: #F7F7F7;
 }
 
 .navbar {
@@ -45,18 +50,34 @@ body {
     font-weight: 500;
 }
 
-#search {
+.input-field {
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+
+    box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+    overflow: hidden;
+    border-radius: 34px;
     width: 300px;
-    font-size: 18px;
-    height: 30px;
-    padding: 6px;
-    border-radius: 20px;
+    position: relative;
+}
+
+input {
+    padding: 5px 12px;
     border: none;
-    background: url(./image/icon-search.svg) no-repeat left;
-    background-color: #fff;
-    background-position: 6px 4px;
-    background-size: 20px;
-    padding-left: 35px;
+    outline: 0;
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    font-family: 'Lato', sans-serif;
+    overflow: visible;
+}
+
+.icon-wrap {
+    position: relative;
+    top: 2px
 }
 
 .user-not-found {
@@ -66,7 +87,7 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    min-height: 500px;
+    height: 280px;
     flex-direction: column;
 }
 
@@ -76,7 +97,7 @@ body {
     background: none;
 }
 
-.not-found-text{
+.not-found-text {
     margin-top: 10px;
     font-size: 28px;
 }
@@ -85,9 +106,10 @@ body {
     width: 100%;
     margin-top: 20px;
     list-style: none;
-    padding: 15px !important;
+    padding: 15px;
     background-color: #ffffff;
     color: #222;
+    border-radius: 10px;
 }
 
 .user-profile {
@@ -109,7 +131,7 @@ img {
     height: 100%;
     width: 100%;
     border-radius: 10px;
-    background-color: #ded2d2;
+    background-color: #E5E5E6;
     object-fit: cover;
 }
 
@@ -123,7 +145,7 @@ img {
     padding: 2px 7px;
     border: 0;
     border-radius: 5px;
-    background-color: #5f5ff1;
+    background-color: #2795F5;
     color: #ffffff;
 }
 
@@ -143,22 +165,12 @@ li {
     height: 80px;
     width: 100%;
     border-radius: 10px;
-    background-color: #ded2d2;
+    background-color: #E5E5E6;
 }
 
 @media only screen and (max-width: 1175px) {
     .users {
         grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media only screen and (max-width: 780px) {
-    .users {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .user-card {
-        padding: 15px;
     }
 }
 
@@ -177,7 +189,7 @@ li {
         grid-template-columns: 1fr;
     }
 
-    #search {
+    .input-field {
         width: 180px;
     }
 
