@@ -1,6 +1,7 @@
 const userCards = document.getElementById("user-cards");
 const searchInput = document.getElementById("search");
 const searchButton = document.getElementById("search-btn");
+const userDataArray = [];
 
 // Function to fetch followers
 async function fetchFollowers(username) {
@@ -16,52 +17,69 @@ async function fetchFollowers(username) {
   }
 }
 
-// Function to create a user card
+// Function to create a user card data object
+function createUserCardData(user) {
+  return {
+    user,
+    followersData: [],
+    revealed: false,
+  };
+}
+
+// Functions
 function createUserCard(user) {
   const card = document.createElement("div");
   card.classList.add("user-card");
 
-  card.innerHTML = `
-        <div class="user-profile">
-         <a href="${user.html_url}" target="_blank">
-            <img src="${user.avatar_url}" alt="${user.login}" class="user-image">
-         </a>
-            <div class="user-name">${user.login}</div>
-        </div>
-        <div class="followers-reveal-button">
-            <div class="user-followers">Followers</div>
-            <button class="reveal-btn" value="true">Reveal</button>
-        </div>
-        <ul class="followers-list">
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-    `;
-  return card;
-}
-// Search user-card using filter method
-function filterUserCards(searchText) {
-  const userCards = document.querySelectorAll(".user-card");
-  const userNotFoundMessage = document.getElementById("user-not-found");
-  let usersFound = false;
+  const userProfile = document.createElement("div");
+  userProfile.classList.add("user-profile");
 
-  userCards.forEach((card) => {
-      const userName = card.querySelector(".user-name").textContent;
-      if (userName.toLowerCase().includes(searchText.toLowerCase())) {
-          card.style.display = "block";
-          usersFound = true;
-      } else {
-          card.style.display = "none";
-      }
-  });
+  const userLink = document.createElement("a");
+  userLink.href = user.html_url;
+  userLink.target = "_blank";
 
-  // Show the user not found UI based on the search result
-  if (usersFound) {
-      userNotFoundMessage.style.display = "none";
-  } else {
-      userNotFoundMessage.style.display = "flex";
+  const userImage = document.createElement("img");
+  userImage.src = user.avatar_url;
+  userImage.alt = user.login;
+  userImage.classList.add("user-image");
+
+  userLink.appendChild(userImage);
+
+  const userName = document.createElement("div");
+  userName.classList.add("user-name");
+  userName.textContent = user.login;
+
+  userProfile.appendChild(userLink);
+  userProfile.appendChild(userName);
+
+  const followersRevealButton = document.createElement("div");
+  followersRevealButton.classList.add("followers-reveal-button");
+
+  const userFollowers = document.createElement("div");
+  userFollowers.classList.add("user-followers");
+  userFollowers.textContent = "Followers";
+
+  const revealButton = document.createElement("button");
+  revealButton.classList.add("reveal-btn");
+  revealButton.value = "true";
+  revealButton.textContent = "Reveal";
+
+  followersRevealButton.appendChild(userFollowers);
+  followersRevealButton.appendChild(revealButton);
+
+  // Create the followers list
+  const followersList = document.createElement("ul");
+  followersList.classList.add("followers-list");
+  for (let i = 0; i < 3; i++) {
+    const listItem = document.createElement("li");
+    followersList.appendChild(listItem);
   }
+
+  card.appendChild(userProfile);
+  card.appendChild(followersRevealButton);
+  card.appendChild(followersList);
+
+  return card;
 }
 
 // Function to create a follower element
@@ -79,9 +97,34 @@ function createUserFollower(follower) {
 
   return followerItem;
 }
+createUserCards();
 
-// Functions
-// update follower list
+// Search user-card using filter method
+function filterUserCards(searchText) {
+  const userNotFoundMessage = document.getElementById("user-not-found");
+  let usersFound = false;
+
+  userDataArray.forEach((userData) => {
+    const userName = userData.user.login;
+    const card = userData.card;
+
+    if (userName.toLowerCase().includes(searchText.toLowerCase().trim())) {
+      card.style.display = "block";
+      usersFound = true;
+    } else {
+      card.style.display = "none";
+    }
+  });
+
+  // Show the user not found UI based on the search result
+  if (usersFound) {
+    userNotFoundMessage.style.display = "none";
+  } else {
+    userNotFoundMessage.style.display = "flex";
+  }
+}
+
+// Function to update the followers list
 function updateFollowersList(followersList, followersData, revealBtn) {
   if (revealBtn.textContent === "Reveal") {
     followersList.innerHTML = "";
@@ -103,7 +146,11 @@ function updateFollowersList(followersList, followersData, revealBtn) {
 }
 
 // Reveal button handler
-async function handleRevealButton(revealBtn, followersList, username) {
+async function handleRevealButton(userData) {
+  const revealBtn = userData.revealBtn;
+  const followersList = userData.followersList;
+  const username = userData.user.login;
+
   revealBtn.addEventListener("click", async () => {
     let followersData;
 
@@ -112,12 +159,12 @@ async function handleRevealButton(revealBtn, followersList, username) {
     const userIndex = userCardsData.findIndex(user => user.login === username);
 
     if (userIndex !== -1 && userCardsData[userIndex].followersData) {
-      // Data is available local storage
+      // Data is available in local storage
       followersData = userCardsData[userIndex].followersData;
     } else {
-      // Data is not in local storage and fetch it from the API 
+      // Data is not in local storage and fetch it from the API
       followersData = await fetchFollowers(username);
-      followersData = followersData.slice(0, 3); // we need only first 3 follower
+      followersData = followersData.slice(0, 3);
 
       // Update the user's followers data in userCardsData
       if (userIndex !== -1) {
@@ -130,7 +177,6 @@ async function handleRevealButton(revealBtn, followersList, username) {
   });
 }
 
-// Function to create and display user cards
 async function createUserCards() {
   try {
     // Check if data is available in local storage
@@ -138,12 +184,23 @@ async function createUserCards() {
 
     if (cachedData) {
       const usersData = JSON.parse(cachedData);
+
       for (const user of usersData) {
+        const userData = createUserCardData(user);
         const card = createUserCard(user);
+
+        userData.card = card;
+        userDataArray.push(userData);
+
         userCards.appendChild(card);
+
+        const revealBtn = card.querySelector(".reveal-btn"); 
         const followersList = card.querySelector(".followers-list");
-        const revealBtn = card.querySelector(".reveal-btn");
-        handleRevealButton(revealBtn, followersList, user.login);
+
+        userData.followersList = followersList;
+        userData.revealBtn = revealBtn;
+
+        handleRevealButton(userData);
       }
     } else {
       // Data is not available in local storage
@@ -153,13 +210,24 @@ async function createUserCards() {
       localStorage.setItem('userCardsData', JSON.stringify(usersData));
 
       for (const user of usersData) {
+        const userData = createUserCardData(user);
         const card = createUserCard(user);
+
+        userData.card = card;
+        userDataArray.push(userData);
+
         userCards.appendChild(card);
-        const followersList = card.querySelector(".followers-list");
+
         const revealBtn = card.querySelector(".reveal-btn");
-        handleRevealButton(revealBtn, followersList, user.login);
+        const followersList = card.querySelector(".followers-list");
+
+        userData.followersList = followersList;
+        userData.revealBtn = revealBtn;
+
+        handleRevealButton(userData);
       }
     }
+
     searchInput.addEventListener("input", (e) => {
       filterUserCards(e.target.value);
     });
@@ -167,4 +235,3 @@ async function createUserCards() {
     console.error("Error fetching user data:", error);
   }
 }
-createUserCards();
