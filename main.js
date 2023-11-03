@@ -141,7 +141,7 @@ function updateFollowersList(followersList, followersData, revealBtn) {
       followersList.appendChild(followerItem);
     });
     revealBtn.textContent = "Reveal";
-    revealBtn.style.backgroundColor = '#5f5ff1';
+    revealBtn.style.backgroundColor = '#2795F5';
   }
 }
 
